@@ -4,6 +4,10 @@ Jenkins CI CD Pipeline Development
 #### Pipeline as Code
 [https://plugins.jenkins.io/workflow-aggregator/](https://plugins.jenkins.io/workflow-aggregator/) <br/>
 
+##### Pipeline as Code Github Demo
+[https://hub.docker.com/r/jenkinsci/pipeline-as-code-github-demo/](https://hub.docker.com/r/jenkinsci/pipeline-as-code-github-demo/) <br/>
+
+
 ##### Writing Pipeline-Compatible Plugins
 [https://www.jenkins.io/doc/developer/plugin-development/pipeline-integration/](https://www.jenkins.io/doc/developer/plugin-development/pipeline-integration/) <br/>
 
@@ -14,3 +18,5 @@ Jenkins CI CD Pipeline Development
 
 #### Docker Workflow Demo
 [https://hub.docker.com/r/jenkinsci/docker-workflow-demo/](https://hub.docker.com/r/jenkinsci/docker-workflow-demo/) <br/>
+
+
