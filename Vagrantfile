@@ -1,60 +1,3 @@
-require 'vagrant-aws'
-require 'yaml'
-
-#Vagrant.configure('2') do |config|
-#  config.vm.define "vagrantAWS-Stata16" do |stata16|
-#    stata16.vm.box = 'aws-dummy'
-#    stata16.vm.synced_folder ".", "/vagrant", disabled: true
-#    stata16.vm.provider 'aws' do |aws,override|
-#      aws_config = YAML::load_file(File.join(Dir.home, ".aws_secrets"))
-#      aws.access_key_id = aws_config.fetch("access_key_id")
-#      aws.secret_access_key = aws_config.fetch("secret_access_key")
-#      aws.keypair_name = aws_config.fetch("keypair_name")
-##       aws.instance_type = "t2.medium"
-#      aws.instance_type = "t2.small"
-##       aws.instance_type = "t2.micro"
-#      aws.region = aws_config.fetch("aws_region")
-#      aws.ami = aws_config.fetch("aws_ami")
-#      aws.security_groups = aws_config.fetch("security_groups")
-##       aws.security_groups = 'vagrant'
-##       aws.security_groups = ['default']
-#      aws.subnet_id = aws_config.fetch("subnet_id")
-##       aws.tags = {
-##         'Name'=> "vagrantAWS-EOD"
-##       }
-#
-#      aws.tags = {
-#        'Name'=> "vagrantAWS-Stata16"
-#      }
-#      aws.block_device_mapping = [{
-#        'DeviceName' => '/dev/sda1',
-#        'Ebs.VolumeSize' => 100,
-#        'Ebs.DeleteOnTermination' => true,
-##         'Ebs.DeleteOnTermination' => false,
-#        'Ebs.VolumeType' => 'gp2'
-##         'Ebs.VolumeType' => 'io1'
-##         'Ebs.Iops' => 1000
-##         'DeviceName' => AWS_DEVICE_NAME,
-##         'Ebs.ValumeSize' => AWS_DEVICE_SIZE,
-##         'Ebs.DeleteOnTermination' => false,
-##         'Ebs.VolumeType' => AWS_DEVICE_VOL_TYPE,
-#      }]
-#
-#      override.ssh.username = aws_config.fetch("ssh_username")
-#      override.ssh.private_key_path = aws_config.fetch("private_key_path")
-#    end
-#    config.vm.provision "ansible" do |ansible|
-##     ansible.playbook = "deploy_ancillaryRH7.yml"
-##     ansible.playbook = "deploy_eodrole.yml"
-#      ansible.playbook = "deploy_jenkinsRH7.yml"
-##     ansible.groups = {
-##       "vagrantAWS" => ["vagrantAWS-Data"]
-##     }
-#      ansible.inventory_path = ".vagrant_hosts"
-#      ansible.verbose = "true"
-#    end
-#  end
-#end
 
 Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
@@ -69,19 +12,19 @@ Vagrant.configure("2") do |config|
 #   trigger.info = "Trigger Execution ..."
 #   trigger.run = { path:"subscription-manager register --username <username> --password <password> --auto-attach"}
 # end
-  config.vm.define "jenkinsRH7" do |jenkinsRH7|
-    jenkinsRH7.vm.box = "clouddood/RH7.5_baserepo"
-    jenkinsRH7.vm.hostname = "jenkinsCICD"
-    jenkinsRH7.vm.network "private_network", ip: "192.168.60.168"
-#   jenkinsRH7.vm.network "private_network", ip: "192.168.60.167", nic_type: "virtio"
-    jenkinsRH7.vm.provision "shell", :inline => "sudo echo '192.168.60.168 jenkinsCICD.local jenkinsCICD' >> /etc/hosts"
+  config.vm.define "jenkinsCICD" do |jenkinsCICD|
+    jenkinsCICD.vm.box = "clouddood/RH7.5_baserepo"
+    jenkinsCICD.vm.hostname = "jenkinsCICD"
+    jenkinsCICD.vm.network "private_network", ip: "192.168.60.168"
+#   jenkinsCICD.vm.network "private_network", ip: "192.168.60.167", nic_type: "virtio"
+    jenkinsCICD.vm.provision "shell", :inline => "sudo echo '192.168.60.168 jenkinsCICD.local jenkinsCICD' >> /etc/hosts"
 
 ##  Use Main / Update in Vagrant provision command ### $vagrant provision --provision-with shell/main/update
 
     # Default
-    jenkinsRH7.vm.provision "main", type: "ansible" do |ansible|
-      ansible.playbook = "deploy_jenkinsRH7_DEV.local.yml"
-#     ansible.playbook = "deploy_jenkinsRH7_DEV.local.yml"
+    jenkinsCICD.vm.provision "main", type: "ansible" do |ansible|
+      ansible.playbook = "deploy_jenkinsCICD_DEV.local.yml"
+#     ansible.playbook = "deploy_jenkinsCICD_DEV.local.yml"
 #     ansible.playbook = "deploy_jenkinsTestRH7.yml"
       ansible.inventory_path = "vagrant_hosts"
       #ansible.tags = ansible_tags
@@ -90,7 +33,7 @@ Vagrant.configure("2") do |config|
       #ansible.limit = ansible_limit
     end
     # Update
-#   jenkinsRH7.vm.provision "update", type: "ansible" do |ansible|
+#   jenkinsCICD.vm.provision "update", type: "ansible" do |ansible|
 #     ansible.playbook = "deploy_jenkinsPatchRH7_DEV.local.yml"
 #     ansible.playbook = "deploy_jenkinsTestRH7.yml"
 #     ansible.inventory_path = "vagrant_hosts"
