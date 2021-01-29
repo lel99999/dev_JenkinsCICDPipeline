@@ -1,0 +1,75 @@
+# main.yml - Activate EPEL
+---
+#- name: Instell Latest EPEL 7 Release
+#  shell:  yum install "{{ epel_url }}" -y --nogpgcheck
+# yum:
+#   name: "{{ epel_url }}"
+#   state: present
+#   disable_gpg_check: yes
+# tags:
+#   - chromeRH7
+
+# Make sure following RHEL Repos Enabled
+# subscription-manager repos --enable rhel-7-server-extras-rpms
+# subscription-manager repos --enable rhel-7-server-optional-rpms
+
+- name: Add jenkins repo
+  shell: wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+- name: Import Key
+  shell: rpm --import http://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+- name: Install Jenkins, JAVA and Git
+  yum:
+    name: {{ item }}
+    state: present:
+  with_items:
+    - libselinux-python
+    - java-1.8.0-openjdk
+    - jenkins
+    - git
+
+- name: Start Jenkins
+  shell: systemctl start jenkins
+
+- name: System Enable jenkins
+  shell: systemctl enable jenkins
+
+- name: Add firewall Rules (open ports 80 and 8080)
+  shell:  firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+- name: Add firewall Rules (open ports 80 and 8080)
+  shell:  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+
+- name: Reload Firewall Rules
+  shell: firewall-cmd --reload
+
+#- name; Install Java
+#  yum:
+#    name: "{{ item }}"
+#    state: present
+#    disable_gpg_check: yes
+# with_items: "{{ jdk_packages }}"
+#  with_items: 
+#  - java-1.8.0-openjdk
+#  - java-1.8.0-openjdk-devel
+#  - libselinux-python
+
+#- name: Install Jenkins
+#  yum:
+#    name: "{{ item }}"
+#    state: present
+#    disable_gpg_check: yes
+#  with_items:
+#    - jenkins
+#   - libXScrnSaver
+
+#- name: Start Jenkins
+#  shell: systemctl start jenkins
+
+- name: Install chrome
+  yum:
+    name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm 
+    state: present
+    disable_gpg_check: yes
+

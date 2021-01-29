@@ -1,0 +1,44 @@
+# main.yml - Activate EPEL
+---
+#- name: Instell Latest EPEL 7 Release
+#  shell:  yum install "{{ epel_url }}" -y --nogpgcheck
+# yum:
+#   name: "{{ epel_url }}"
+#   state: present
+#   disable_gpg_check: yes
+# tags:
+#   - chromeRH7
+
+# Make sure following RHEL Repos Enabled
+# subscription-manager repos --enable rhel-7-server-extras-rpms
+# subscription-manager repos --enable rhel-7-server-optional-rpms
+
+- name; Install Java
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+# with_items: "{{ jdk_packages }}"
+  with_items: 
+  - java-1.8.0-openjdk
+  - java-1.8.0-openjdk-devel
+  - libselinux-python
+
+- name: Install Jenkins
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+  with_items:
+    - jenkins
+#   - libXScrnSaver
+
+- name: Start Jenkins
+  shell: systemctl start jenkins
+
+- name: Install chrome
+  yum:
+    name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm 
+    state: present
+    disable_gpg_check: yes
+
