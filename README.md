@@ -22,6 +22,9 @@ Jenkins CI CD Pipeline Development
 #### Jenkins CI/CD Template
 Create Jenkins Pipeline <br/>
 ![Jenkins Pipeline](https://github.com/lel99999/dev_JenkinsCICDPipeline/blob/main/JenkinsCICd-01.PNG) <br/>
+
+Script directly or upload Jenkinsfile: <br/>
+
 ```
 pipeline {
    agent any
