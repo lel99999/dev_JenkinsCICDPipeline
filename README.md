@@ -20,6 +20,8 @@ Jenkins CI CD Pipeline Development
 [https://hub.docker.com/r/jenkinsci/docker-workflow-demo/](https://hub.docker.com/r/jenkinsci/docker-workflow-demo/) <br/>
 
 #### Jenkins CI/CD Template
+Create Jenkins Pipeline <br/>
+![Jenkins Pipeline](https://github.com/lel99999/dev_JenkinsCICDPipeline/blob/main/JenkinsCICd-01.PNG) <br/>
 ```
 pipeline {
    agent any
