@@ -49,3 +49,12 @@ pipeline {
   }
 }
 ```
+
+#### Docker Demo
+[https://hub.docker.com/r/jenkinsci/pipeline-as-code-github-demo](https://hub.docker.com/r/jenkinsci/pipeline-as-code-github-demo) <br/>
+
+View Log:
+```
+$docker container ls
+$docker logs --details <container_id>
+```
